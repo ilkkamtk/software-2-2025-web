@@ -96,6 +96,7 @@ const picArray = [
 const modal = document.querySelector('dialog');
 const modalImage = modal.querySelector('img');
 const section = document.querySelector('#pictures');
+// select close button
 
 for (let pic of picArray) {
   const article = document.createElement('article');
@@ -111,7 +112,11 @@ for (let pic of picArray) {
   const p = document.createElement('p');
   p.innerText = 'Something';
 
+  // do rest of the elements: figure, img, figcaption
+
   article.append(h2, p);
   section.append(article);
 }
+
+// add click event to close button, close modal
 
