@@ -1,13 +1,25 @@
 'use strict';
 
-async function getAirport() {                 // asynchronous function is defined by the async keyword
-  try {                                               // error handling: try/catch/finally
-    const response = await fetch('http://127.0.0.1:3000/airport/EFHK');    // starting data download, fetch returns a promise which contains an object of type 'response'
-    const jsonData = await response.json();          // retrieving the data retrieved from the response object using the json() function
-    return jsonData;
-  } catch (error) {
-    console.log(error.message);
-  } finally {                                         // finally = this is executed anyway, whether the execution was successful or not
-    console.log('asynchronous function complete');
+const searchForm = document.querySelector('#search-form');
+const target = document.querySelector('#target');
+
+async function getAirport(icao) {                 // asynchronous function is defined by the async keyword
+  const response = await fetch('http://127.0.0.1:3000/airport/' + icao);    // starting data download, fetch returns a promise which contains an object of type 'response'
+  const jsonData = await response.json();          // retrieving the data retrieved from the response object using the json() function
+  if (!response.ok) {
+    throw new Error(jsonData.message);
   }
+  return jsonData;
 }
+
+searchForm.addEventListener('submit', async function(evt) {
+  try {
+    evt.preventDefault();
+    const icao = document.querySelector('input[name=icao]').value;
+    const airport = await getAirport(icao);
+    console.log(airport);
+    target.innerText = `Name: ${airport.name}, type: ${airport.type}`;
+  } catch (error) {
+    alert(error.message);
+  }
+});
