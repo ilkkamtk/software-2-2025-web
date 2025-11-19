@@ -23,7 +23,21 @@ tvForm.addEventListener('submit', async function(evt) {
 
     const img = document.createElement('img');
     img.alt = tvShow.show.name;
-    img.src = tvShow.show.image?.medium;
+    // default value for tvShow.show.image, option 2
+    // if (!tvShow.show.image) {
+    //  tvShow.show.image = {medium: 'https://placeholdit.com/210x295'};
+    // }
+    // img.src = tvShow.show.image?.medium;
+
+    // default value for tvShow.show.image, option 3
+    img.src = tvShow.show.image ?
+        tvShow.show.image.medium :
+        'https://placeholdit.com/210x295';
+
+    // default image, option 1
+    // img.addEventListener('error', function() {
+    //  img.src = 'https://placeholdit.com/210x295';
+    // });
 
     const summary = document.createElement('div');
     summary.innerHTML = tvShow.show.summary;
